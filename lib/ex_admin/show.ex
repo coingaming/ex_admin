@@ -63,6 +63,7 @@ defmodule ExAdmin.Show do
       def show_view(var!(conn), unquote(resource) = var!(resource)) do
         import ExAdmin.Utils
         import ExAdmin.ViewHelpers
+        _ = unquote(resource)
         _ = var!(resource)
         markup safe: true do
           unquote(contents)
@@ -374,7 +375,7 @@ defmodule ExAdmin.Show do
         """)
       end
 
-      hr
+      hr()
       h4(opts[:label] || "Enter new #{opts[:assoc_name]}")
       ExAdmin.Show.build_association_filler_form(resource, opts[:autocomplete], opts)
     end
