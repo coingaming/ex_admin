@@ -1199,30 +1199,30 @@ defmodule ExAdmin.Form do
     end)
   end
 
-  defp build_checkboxes(conn, name, collection, opts, resource, model_name, errors, name_ids) do
-    theme_module(conn, Form).wrap_collection_check_boxes fn ->
-      for opt <- collection do
-        opt_id = Schema.get_id(opt)
-        name_str = "#{model_name}[#{name_ids}][#{opt_id}]"
-        selected = cond do
-          errors != nil ->
-            # error and selected in params
-            request_params = Map.get(conn, :body_params, nil)
-            ids = Map.get(request_params, model_name, %{}) |>
-                  Map.get(name_ids, []) |>
-                  ExAdmin.EctoFormMappers.checkboxes_to_ids
-            Integer.to_string(opt_id) in ids
-          true ->
-            assoc_ids = Enum.map(get_resource_field2(resource, name), &(Schema.get_id(&1)))
-            # select and no error
-            opt_id in assoc_ids
-        end
-        display_name = display_name opt
-        theme_module(conn, Form).collection_check_box display_name, name_str,
-          opt_id, selected
-      end
-    end
-  end
+  # defp build_checkboxes(conn, name, collection, opts, resource, model_name, errors, name_ids) do
+  #   theme_module(conn, Form).wrap_collection_check_boxes fn ->
+  #     for opt <- collection do
+  #       opt_id = Schema.get_id(opt)
+  #       name_str = "#{model_name}[#{name_ids}][#{opt_id}]"
+  #       selected = cond do
+  #         errors != nil ->
+  #           # error and selected in params
+  #           request_params = Map.get(conn, :body_params, nil)
+  #           ids = Map.get(request_params, model_name, %{}) |>
+  #                 Map.get(name_ids, []) |>
+  #                 ExAdmin.EctoFormMappers.checkboxes_to_ids
+  #           Integer.to_string(opt_id) in ids
+  #         true ->
+  #           assoc_ids = Enum.map(get_resource_field2(resource, name), &(Schema.get_id(&1)))
+  #           # select and no error
+  #           opt_id in assoc_ids
+  #       end
+  #       display_name = display_name opt
+  #       theme_module(conn, Form).collection_check_box display_name, name_str,
+  #         opt_id, selected
+  #     end
+  #   end
+  # end
 
 
 
@@ -1313,14 +1313,14 @@ defmodule ExAdmin.Form do
     |> time_select(field_name, Map.get(opts, :options, []))
   end
 
-  def build_control(Elixir.DateTime, resource, opts, model_name, field_name, _ext_name) do
-    %{name: model_name, model: resource, id: model_name, class: "form-control"}
-    |> datetime_select(field_name, Map.get(opts, :options, []))
-  end
-  def build_control(Elixir.NaiveDateTime, resource, opts, model_name, field_name, _ext_name) do
-    %{name: model_name, model: resource, id: model_name, class: "form-control"}
-    |> datetime_select(field_name, Map.get(opts, :options, []))
-  end
+  # def build_control(Elixir.DateTime, resource, opts, model_name, field_name, _ext_name) do
+  #   %{name: model_name, model: resource, id: model_name, class: "form-control"}
+  #   |> datetime_select(field_name, Map.get(opts, :options, []))
+  # end
+  # def build_control(Elixir.NaiveDateTime, resource, opts, model_name, field_name, _ext_name) do
+  #   %{name: model_name, model: resource, id: model_name, class: "form-control"}
+  #   |> datetime_select(field_name, Map.get(opts, :options, []))
+  # end
   def build_control(Elixir.Date, resource, opts, model_name, field_name, _ext_name) do
     %{name: model_name, model: resource, id: model_name, class: "form-control"}
     |> date_select(field_name, Map.get(opts, :options, []))
